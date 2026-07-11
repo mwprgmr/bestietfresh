@@ -111,9 +111,23 @@ const faqs = [
   ["What is the cancellation policy?", "Orders can be cancelled before processing begins. Fresh-item refund rules are shown before checkout."],
 ];
 
+const APP_URL = "https://app.bestietfresh.com";
+
+function handleAppLinkClick(event) {
+  if (window.location.origin === APP_URL) {
+    event.preventDefault();
+  }
+}
+
 function Header() {
   const [open, setOpen] = useState(false);
   const nav = ["Categories", "Track Order", "Offers"];
+  const navTargets = {
+    Categories: APP_URL,
+    "Track Order": APP_URL,
+    Offers: "#offers",
+  };
+  const isAppNavItem = (item) => item !== "Offers";
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Bestiet Fresh home">
@@ -132,28 +146,99 @@ function Header() {
       </div>
       <nav className="desktop-nav" aria-label="Primary navigation">
         {nav.map((item) => (
-          <a key={item} href={`#${item.toLowerCase().replace(" ", "-")}`}>{item}</a>
+          <a
+            key={item}
+            href={navTargets[item]}
+            target={isAppNavItem(item) ? "_self" : undefined}
+            onClick={isAppNavItem(item) ? handleAppLinkClick : undefined}
+          >
+            {item}
+          </a>
         ))}
       </nav>
       <div className="nav-actions">
-        <button className="icon-button" aria-label="Open cart">
+        <a className="icon-button" href={APP_URL} target="_self" onClick={handleAppLinkClick} aria-label="Open cart">
           <ShoppingBag size={20} />
-        </button>
-        <button className="login-button">Login</button>
-        <a className="primary-button small" href="#categories">Order Now</a>
+        </a>
+        <a className="login-button" href={APP_URL} target="_self" onClick={handleAppLinkClick}>Login</a>
+        <a className="primary-button small" href={APP_URL} target="_self" onClick={handleAppLinkClick}>Order Now</a>
         <button className="icon-button menu-button" aria-label="Open menu" onClick={() => setOpen(true)}>
           <Menu size={22} />
         </button>
       </div>
       {open && (
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
-          <button className="icon-button close-button" aria-label="Close menu" onClick={() => setOpen(false)}>
-            <X size={22} />
-          </button>
-          {nav.map((item) => (
-            <a key={item} onClick={() => setOpen(false)} href={`#${item.toLowerCase().replace(" ", "-")}`}>{item}</a>
-          ))}
-          <a className="primary-button" href="#categories" onClick={() => setOpen(false)}>Order Now</a>
+          <div className="mobile-menu-panel">
+            <div className="mobile-menu-top">
+              <a className="brand" href="#top" onClick={() => setOpen(false)} aria-label="Bestiet Fresh home">
+                <span className="brand-mark">
+                  <img src="/bestiet-logo.png" alt="" />
+                </span>
+                <span className="brand-text">
+                  <strong>Bestiet</strong>
+                  <em>Fresh</em>
+                </span>
+              </a>
+              <button className="icon-button close-button" aria-label="Close menu" onClick={() => setOpen(false)}>
+                <X size={22} />
+              </button>
+            </div>
+            <a className="mobile-search-link" href={APP_URL} target="_self" onClick={(event) => {
+              handleAppLinkClick(event);
+              setOpen(false);
+            }}>
+              <Search size={18} />
+              <span>Search fish, prawns, chicken...</span>
+            </a>
+            <nav className="mobile-nav-list" aria-label="Mobile menu links">
+              {[
+                ["Categories", "Browse fresh fish, meat, and ready to cook"],
+                ["Track Order", "Follow every freshness step"],
+                ["Offers", "Weekend specials and combos"],
+              ].map(([item, copy]) => (
+                <a
+                  key={item}
+                  onClick={(event) => {
+                    if (isAppNavItem(item)) {
+                      handleAppLinkClick(event);
+                    }
+                    setOpen(false);
+                  }}
+                  href={navTargets[item]}
+                  target={isAppNavItem(item) ? "_self" : undefined}
+                >
+                  <span>
+                    <strong>{item}</strong>
+                    <em>{copy}</em>
+                  </span>
+                  <ArrowRight size={18} />
+                </a>
+              ))}
+            </nav>
+            <div className="mobile-quick-actions">
+              <a href={APP_URL} target="_self" onClick={(event) => {
+                handleAppLinkClick(event);
+                setOpen(false);
+              }}>
+                <ShoppingBag size={18} />
+                Cart
+              </a>
+              <a href="#top" onClick={() => setOpen(false)}>
+                <MapPin size={18} />
+                Location
+              </a>
+            </div>
+            <div className="mobile-menu-footer">
+              <a className="primary-button" href={APP_URL} target="_self" onClick={(event) => {
+                handleAppLinkClick(event);
+                setOpen(false);
+              }}>Order Now</a>
+              <a className="secondary-button" href={APP_URL} target="_self" onClick={(event) => {
+                handleAppLinkClick(event);
+                setOpen(false);
+              }}>Login</a>
+            </div>
+          </div>
         </div>
       )}
     </header>
@@ -187,7 +272,7 @@ function App() {
               Hygienically processed, expertly cleaned, and packed with care for your family.
             </p>
             <div className="hero-actions">
-              <a className="primary-button" href="#categories">Order Now</a>
+              <a className="primary-button" href={APP_URL} target="_self" onClick={handleAppLinkClick}>Order Now</a>
               <a className="secondary-button" href="#offers">Special Offers</a>
             </div>
             <div className="trust-row" aria-label="Trust guarantees">
@@ -212,7 +297,7 @@ function App() {
           <SectionIntro title="Categories" copy="Premium selections for everyday cooking and special family meals." />
           <div className="category-grid">
             {categories.map(([name, image]) => (
-              <a className="category-card" href="#offers" key={name}>
+              <a className="category-card" href={APP_URL} target="_self" onClick={handleAppLinkClick} key={name}>
                 <img src={image} alt={`${name} category`} loading="lazy" />
                 <span>{name}</span>
                 <ArrowRight size={18} />
@@ -228,7 +313,7 @@ function App() {
               <p>Special Offers</p>
               <h2>{offer.title}</h2>
               <span>{offer.copy}</span>
-              <button className="primary-button">{offer.action}</button>
+              <a className="primary-button" href={APP_URL} target="_self" onClick={handleAppLinkClick}>{offer.action}</a>
             </div>
             <div className="offer-controls" aria-label="Offer carousel controls">
               {offers.map((item, index) => (
@@ -314,7 +399,7 @@ function App() {
                 <div>
                   <h3>{title}</h3>
                   <p>{ingredients}</p>
-                  <a href="#categories">Shop ingredients <ArrowRight size={16} /></a>
+                  <a href={APP_URL} target="_self" onClick={handleAppLinkClick}>Shop ingredients <ArrowRight size={16} /></a>
                 </div>
               </article>
             ))}
@@ -366,7 +451,9 @@ function App() {
         </nav>
         <nav aria-label="Footer service links">
           <h3>Service</h3>
-          {["Fresh Fish", "Premium Fish", "Chicken", "Mutton", "Ready To Cook", "Track Order"].map((item) => <a href="#top" key={item}>{item}</a>)}
+          {["Fresh Fish", "Premium Fish", "Chicken", "Mutton", "Ready To Cook", "Track Order"].map((item) => (
+            <a href={APP_URL} target="_self" onClick={handleAppLinkClick} key={item}>{item}</a>
+          ))}
         </nav>
         <div>
           <h3>Contact</h3>
