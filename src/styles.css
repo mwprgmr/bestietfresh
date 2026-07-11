@@ -860,7 +860,7 @@ section:not(.hero) {
   padding: 0 0 22px;
 }
 
-.app-download {
+section.app-download {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1012,6 +1012,19 @@ section:not(.hero) {
   padding-top: 28px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 13px;
+}
+
+.footer-credit-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.footer-credit-link:hover {
+  color: var(--green);
+  text-decoration-color: currentColor;
 }
 
 button:focus-visible,
@@ -1200,7 +1213,7 @@ input:focus-visible {
     height: 250px;
   }
 
-  .app-download {
+  section.app-download {
     margin-bottom: 46px;
     padding: 42px 28px;
   }
@@ -1213,4 +1226,103 @@ input:focus-visible {
     padding-right: 0;
   }
 
+}
+
+@media (max-width: 767px) {
+  .category-grid,
+  .recipe-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .category-card,
+  .recipe-card {
+    height: 100%;
+    min-width: 0;
+  }
+
+  .category-card {
+    min-height: 168px;
+  }
+
+  .category-card img {
+    height: 168px;
+    border-radius: var(--radius);
+  }
+
+  .category-card span {
+    right: 38px;
+    bottom: 14px;
+    left: 14px;
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  .category-card svg {
+    right: 12px;
+    bottom: 14px;
+  }
+
+  .recipe-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .recipe-card img {
+    aspect-ratio: 1.08;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .recipe-card div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 14px;
+  }
+
+  .recipe-card h3 {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .recipe-card p {
+    margin: 8px 0 12px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .recipe-card a {
+    min-height: 44px;
+    margin-top: auto;
+    font-size: 13px;
+  }
+
+  section.app-download {
+    gap: 22px;
+    padding: 36px 24px;
+  }
+
+  .app-download h2 {
+    font-size: clamp(30px, 9vw, 40px);
+    line-height: 1.05;
+  }
+
+  .app-download p {
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .store-buttons {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .store-buttons button {
+    min-height: 48px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
 }

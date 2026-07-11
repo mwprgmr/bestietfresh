@@ -380,7 +380,14 @@ function App() {
         </div>
         <div className="copyright">
           <span>Payment Methods: UPI, Cards, Net Banking, Cash on Delivery</span>
-          <span>Developed by Crop Tech</span>
+          <a
+            className="footer-credit-link"
+            href="https://croptech.online"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Developed by Crop Tech
+          </a>
           <span>Copyright © 2026 Bestiet Fresh. All rights reserved.</span>
         </div>
       </footer>
