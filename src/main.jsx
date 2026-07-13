@@ -132,7 +132,7 @@ function Header() {
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Bestiet Fresh home">
         <span className="brand-mark">
-          <img src="/bestiet-logo.png" alt="" />
+          <img src="/bestiet-logo.png" alt="" height="35px" />
         </span>
         <span className="brand-text">
           <strong>Bestiet</strong>
@@ -290,6 +290,30 @@ function App() {
                 <span>Packed fresh for today</span>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="video-story section-shell" aria-labelledby="video-story-title">
+          <div className="video-story-copy">
+            <p>Inside Bestiet Fresh</p>
+            <h2 id="video-story-title">See freshness before you order.</h2>
+            <span>
+              A closer look at how Bestiet Fresh brings premium seafood quality, clean handling,
+              and doorstep confidence together for every family order.
+            </span>
+          </div>
+          <div className="video-frame">
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster={photos.fish}
+              aria-label="Bestiet Fresh freshness and delivery video"
+            >
+              <source src="/bestiet-fresh-video.mov" type="video/quicktime" />
+              <source src="/bestiet-fresh-video.mov" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </section>
 
