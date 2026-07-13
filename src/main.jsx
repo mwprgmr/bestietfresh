@@ -310,8 +310,8 @@ function App() {
               poster={photos.fish}
               aria-label="Bestiet Fresh freshness and delivery video"
             >
-              <source src="/bestiet-fresh-video.mov" type="video/quicktime" />
-              <source src="/bestiet-fresh-video.mov" />
+              <source src="../bestiet-fresh-video.mov" type="video/quicktime" />
+              <source src="../bestiet-fresh-video.mov" />
               Your browser does not support the video tag.
             </video>
           </div>
